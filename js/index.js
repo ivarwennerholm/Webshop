@@ -35,7 +35,6 @@ function fetchProducts() {
 
 function addItemToCart(id) {
   var number = document.getElementById(id).valueAsNumber;
-  console.log(number);
   var cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
   fetch("https://fakestoreapi.com/products")
   .then((res) => res.json())
