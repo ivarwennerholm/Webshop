@@ -1,12 +1,15 @@
+var xRate;
+
 fetch(
   "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_hhkRg7lGTkXHkwwJMNEg7fzRgksTinGzfpVHeqOh&currencies=SEK"
 )
   .then((res) => res.json())
   .then((data) => {
-    fetchProducts(data.data.SEK);
+    xRate = data.data.SEK;
+    fetchProducts();
   });
 
-function fetchProducts(xRate) {
+function fetchProducts() {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -35,24 +38,31 @@ function addItemToCart(id) {
   console.log(number);
   var cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
   fetch("https://fakestoreapi.com/products")
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach(function (product) {
-        if (product.id == id) {
+  .then((res) => res.json())
+  .then((data) => {
+    data.forEach(function (product) {
+      if (product.id == id) {
+        var existingProductIndex = cart.findIndex(item => item.id == id);
+        if (existingProductIndex !== -1) {
+          cart[existingProductIndex].number += number;
+        } else {
           cart.push({
             id: product.id,
             title: product.title,
             img: product.image,
-            price: product.price,
+            price: (product.price * xRate).toFixed(0),
             number: number
           });
         }
-      });
-      localStorage.setItem("cart", JSON.stringify(cart));
-      console.log(localStorage.getItem("cart"));
+      }
     });
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+    console.log(localStorage.getItem("cart"));
+  });
 }
 
+/*
 function removeBackground(image) {}
 
 fetch("json/bg-colors.json")
@@ -68,3 +78,4 @@ function getNextBgColor() {
     //return `${color.color}`;
   });
 }
+*/
