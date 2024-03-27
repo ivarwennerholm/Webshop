@@ -20,9 +20,9 @@ function fetchProducts(xRate) {
                     <img class="img-fluid" src="${product.image}">
                     <br><br>
                     <h4>Pris: ${(product.price * xRate).toFixed(0)}kr</h4>
-                    <a href="order.html?id=${product.id}">
-                    <button class="btn btn-primary" id="${product.id}">Köp</button>
-                    </a>
+                    <input type="number" value="1" min="1" max="10" id="${product.id}">
+                    <button class="btn btn-primary" onclick="addItemToCart(${product.id})">Köp</button>
+                    
               </div>
             `;
       });
@@ -30,8 +30,30 @@ function fetchProducts(xRate) {
     });
 }
 
-function removeBackground(image) {
+function addItemToCart(id) {
+  var number = document.getElementById(id).valueAsNumber;
+  console.log(number);
+  var cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+  fetch("https://fakestoreapi.com/products")
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach(function (product) {
+        if (product.id == id) {
+          cart.push({
+            id: product.id,
+            title: product.title,
+            img: product.image,
+            price: product.price,
+            number: number
+          });
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      console.log(localStorage.getItem("cart"));
+    });
 }
+
+function removeBackground(image) {}
 
 fetch("json/bg-colors.json")
   .then((res) => res.json())
@@ -41,7 +63,7 @@ fetch("json/bg-colors.json")
   });
 
 function getNextBgColor() {
-  bgColors.forEach(color => {
+  bgColors.forEach((color) => {
     console.log(color.color);
     //return `${color.color}`;
   });
