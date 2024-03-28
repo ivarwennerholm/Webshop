@@ -13,9 +13,9 @@ function fetchProducts() {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
-      let output = "<h2>🛒 Web Shop</h2>";
+      let markup = "";
       data.forEach(function (product) {
-        output += `
+        markup += `
               <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-4">
                     <h3>${product.title}</h3>
                     <p>${product.description}</p>
@@ -29,7 +29,7 @@ function fetchProducts() {
               </div>
             `;
       });
-      document.getElementById("output").innerHTML = output;
+      document.getElementById("productsContainer").innerHTML = markup;
     });
 }
 
@@ -57,7 +57,7 @@ function addItemToCart(id) {
     });
     
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(localStorage.getItem("cart"));
+    //console.log(localStorage.getItem("cart"));
   });
 }
 

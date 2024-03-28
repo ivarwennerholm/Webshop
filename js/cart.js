@@ -2,11 +2,11 @@ getCart();
 
 function getCart() {
   var cart = JSON.parse(localStorage.getItem("cart"));
-  var output = "";
+  let markup = "";
   var grandTotal = 0;
   if (cart && cart.length > 0) {
     cart.forEach(function (product) {
-      output += `
+      markup += `
           <div class="row border">
             <div class="col-12 col-sm-6 col-md-4 col-lg-2 text-center my-2">
               <img class="img-fluid" src="${product.img}">
@@ -28,20 +28,27 @@ function getCart() {
               <h4>${product.number * product.price}kr</h4>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-2 text-center my-2">
-              <button class="btn btn-danger" onclick="removeItemFromCart(${product.id})">Ta bort</button>  
-              <input type="number" value="${product.number}" id="${product.id}" min="0">
-              <button class="btn btn-info" onclick="updateItemInCart(${product.id})">Uppdatera</button>  
+              <div class="my-2">
+                <button class="btn btn-danger" onclick="removeItemFromCart(${product.id})">Ta bort</button>  
+              </div>
+              <div class="mt-4">
+                <input type="number" class="col-3" value="${product.number}" id="${product.id}" min="0">
+              </div>
+              <div class="mt-1">
+                <button class="btn btn-info" onclick="updateItemInCart(${product.id})">Uppdatera</button>  
+              </div>
             </div>
           </div>
         `;
       grandTotal += product.number * product.price;
     });
-    output += `<div class="row border"><div class="col-12 text-center py-3"><h3><b>Totalt</b>: ${grandTotal}kr</h3></div></div>`;
+    markup += `<div class="row border"><div class="col-12 text-center py-3"><h3><b>Totalt</b>: ${grandTotal}kr</h3></div></div>`;
+    markup += `<div class="row"><div class="col-12 text-center py-3"><button class="btn btn-danger" onclick="emptyCart()">Töm varukorg</button></div></div>`;
   } else {
-    output = "<p>Your cart is empty</p>";
+    markup = "<div class='text-center'><p>Your cart is empty</p></div>";
   }
 
-  document.getElementById("cartContainer").innerHTML = output;
+  document.getElementById("cartContainer").innerHTML = markup;
 }
 
 function removeItemFromCart(id) {
@@ -70,6 +77,11 @@ function updateItemInCart(id) {
     }
     productToUpdate.number = newQuantity;
     localStorage.setItem("cart", JSON.stringify(cart));
+    getCart();
+  }
+
+  function emptyCart() {
+    localStorage.removeItem("cart");
     getCart();
   }
   
