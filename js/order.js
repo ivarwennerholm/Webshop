@@ -1,19 +1,4 @@
-// Parse:a inparametern 'id' i länken till order.html
-function getQueryParam(param) {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  return urlParams.get(param);
-}
-
-// Plocka ut värdet av 'id'-parametern
-const id = getQueryParam("id");
-console.log("ID:", id);
-
 // Värden att använda globalt
-var productId;
-var productTitle;
-var productImg;
-var productPrice;
 let custName;
 let custEmail;
 let custPhone;
@@ -21,59 +6,124 @@ let custStreet;
 let custZip;
 let custCity;
 
-// Hämta växlingskurs för SEK-USD
-fetch(
-  "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_hhkRg7lGTkXHkwwJMNEg7fzRgksTinGzfpVHeqOh&currencies=SEK"
-)
-  .then((res) => res.json())
-  .then((data) => {
-    fetchProducts(data.data.SEK);
-  });
+// Hitta och addera lyssnare till order-knappen
+//const orderBtn = document.getElementById("orderBtn");
+//orderBtn.addEventListener("click", validateForm);
+populateCart();
+validateAllTest();
 
-// Hämta produkterna
-function fetchProducts(xRate) {
-  fetch("https://fakestoreapi.com/products")
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach(function (product) {
-        if (product.id == id) {
-          productId = product.id;
-          productTitle = product.title;
-          productImg = product.image;
-          productPrice = (product.price * xRate).toFixed(0);
-          output = `
-              <div class="row">
-                  
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center">
-                  <img class="img-fluid" src="${productImg}">
-                </div>
-                    
-                <div class="col-12 col-md-6 col-lg-3 text-center">
-                  <h3>Produkt:</h3>
-                  <h3>${productTitle}</h3>
-                </div>
-                    
-                <div class="col-12 6 col-md-6 col-lg-3 text-center">
-                  <h3>Pris:</h3>  
-                  <h3>${productPrice}kr</h3>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 text-center">
-                  <h3>Antal:</h3>
-                  <h3>1</h3>
-                </div>
-
+function populateCart() {
+  var cart = JSON.parse(localStorage.getItem("cart"));
+  let markup = "";
+  if (cart && cart.length > 0) {
+    cart.forEach(function (product) {
+      markup += `
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-2">
+                <img class="img-samesize img-thumbnail" src="${product.img}">
               </div>
-            `;
-        }
-      });
-      document.getElementById("product").innerHTML = output;
+          `;
     });
+  } else {
+    markup = "<div class='text-center'><p>Din varukorg är tom</p></div>";
+  }
+  document.getElementById("cartDisplay").innerHTML = markup;
 }
 
-// Hitta och addera lyssnare till order-knappen
-const orderBtn = document.getElementById("orderBtn");
-orderBtn.addEventListener("click", validateForm);
+function validateName() {
+  nameInput = document.getElementById("nameInput");
+  custName = nameInput.value;
+  if (custName.length < 2 || custName.length > 50) {
+    nameInput.className = "form-control is-invalid";
+    return false;
+  } else {
+    nameInput.className = "form-control is-valid";
+    return true;
+  }
+}
+
+function validateEmail() {
+  emailInput = document.getElementById("emailInput");
+  custEmail = emailInput.value;
+  if (!custEmail.includes("@") || custEmail.length > 50) {
+    emailInput.className = "form-control is-invalid";
+    return false;
+  } else {
+    emailInput.className = "form-control is-valid";
+    return true;
+  }
+}
+
+function validatePhone() {
+  console.log("validatePhone()");
+  phoneInput = document.getElementById("phoneInput");
+  custPhone = phoneInput.value;
+  console.log(custPhone);
+  if (!/^[\d()-]{0,50}$/.test(custPhone)) {
+    console.log("invalid");
+    phoneInput.className = "form-control is-invalid";
+    return false;
+  } else {
+    console.log("valid");
+    phoneInput.className = "form-control is-valid";
+    return true;
+  }
+}
+
+function validateStreet() {
+  streetInput = document.getElementById("streetInput");
+  custStreet = streetInput.value;
+  if (custStreet.length < 2 || custStreet.length > 50) {
+    streetInput.className = "form-control is-invalid";
+    return false;
+  } else {
+    streetInput.className = "form-control is-valid";
+    return true;
+  }
+}
+
+function validateZip() {
+  zipInput = document.getElementById("zipInput");
+  custZip = zipInput.value;
+  if (!/^[\d]{5}$/.test(custZip)) {
+    zipInput.className = "form-control is-invalid";
+    return false;
+  } else {
+    zipInput.className = "form-control is-valid";
+    return true;
+  }
+}
+
+
+function validateCity() {
+  cityInput = document.getElementById("cityInput");
+  custCity = cityInput.value;
+  if (custCity.length < 2 || custCity.length > 50) {
+    cityInput.className = "form-control is-invalid";
+    return false;
+  } else {
+    cityInput.className = "form-control is-valid";
+    return true;
+  }
+}
+
+function validateAllTest() {
+  validateName();
+  validateEmail();
+  validatePhone();
+  validateStreet();
+  validateZip();
+  validateCity();
+}
+
+function validateAll() {
+  //orderButton = document.getElementById("orderButton");
+  if (validateName() && validateEmail() && validatePhone() && validateStreet() && validateZip() && validateCity()) {
+    //orderButton.removeAttribute("disabled");
+    return true;
+  } else {
+    return false;
+  }
+}
 
 // Validera värdena i formuläret
 function validateForm() {

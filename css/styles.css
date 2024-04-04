@@ -1,0 +1,15 @@
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #0000cc;
+  border-color: #0000cc;
+}
+
+.img-samesize {
+  width: 200px; /* You can set the dimensions to whatever you want */
+  height: 200px;
+  object-fit: cover;
+}
