@@ -22,7 +22,7 @@
         class="my-2 px-5 d-flex flex-row justify-content-center row"
         id="cartDisplay"
       ></div>
-      <div class="text-center mt-4 mb-2 px-5" id="prompt">
+      <div class="text-center mt-4 mb-2 px-5">
         <h5>Fyll i dina uppgifter nedan 👇</h5>
       </div>
       <div class="input-group my-2 px-5">
@@ -31,7 +31,7 @@
         </div>
         <input
           type="text"
-          onchange="updateOrderButton();"
+          onchange="valAllFieldsAndUpdateOrdBtn();"
           onkeypress="this.onchange();"
           onpaste="this.onchange();"
           oninput="this.onchange();"
@@ -45,7 +45,7 @@
         </div>
         <input
           type="text"
-          onchange="updateOrderButton();"
+          onchange="valAllFieldsAndUpdateOrdBtn();"
           onkeypress="this.onchange();"
           onpaste="this.onchange();"
           oninput="this.onchange();"
@@ -60,7 +60,7 @@
         </div>
         <input
           type="text"
-          onchange="updateOrderButton();"
+          onchange="valAllFieldsAndUpdateOrdBtn();"
           onkeypress="this.onchange();"
           onpaste="this.onchange();"
           oninput="this.onchange();"
@@ -77,7 +77,7 @@
         </div>
         <input
           type="text"
-          onchange="updateOrderButton();"
+          onchange="valAllFieldsAndUpdateOrdBtn();"
           onkeypress="this.onchange();"
           onpaste="this.onchange();"
           oninput="this.onchange();"
@@ -86,7 +86,7 @@
         />
         <input
           type="text"
-          onchange="updateOrderButton();"
+          onchange="valAllFieldsAndUpdateOrdBtn();"
           onkeypress="this.onchange();"
           onpaste="this.onchange();"
           oninput="this.onchange();"
@@ -95,7 +95,7 @@
         />
         <input
           type="text"
-          onchange="updateOrderButton();"
+          onchange="valAllFieldsAndUpdateOrdBtn();"
           onkeypress="this.onchange();"
           onpaste="this.onchange();"
           oninput="this.onchange();"
@@ -105,12 +105,13 @@
       </div>
 
       <div class="text-center my-4">
-        <button id="orderButton" class="btn btn-outline-primary" disabled>
-          Skicka beställning 🚚
-        </button>
+        <a href="confirm.html">
+          <button id="orderButton" class="btn btn-outline-primary" disabled>
+            Skicka beställning 🚚
+          </button>
+        </a>
       </div>
     </div>
-    <div class="my-2 px-5" id="confirmDisplay"></div>
     <script src="js/order.js"></script>
     <script src="js/common.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>

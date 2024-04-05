@@ -6,12 +6,8 @@ let custStreet;
 let custZip;
 let custCity;
 
-// Hitta och addera lyssnare till order-knappen
-//const orderButton = document.getElementById("orderButton");
-//orderButton.addEventListener("click", validateForm);
 populateCart();
-//valAllFieldsUpdateOrdBtn();
-updateOrderButton();
+valAllFieldsAndUpdateOrdBtn();
 
 function populateCart() {
   var cart = JSON.parse(localStorage.getItem("cart"));
@@ -55,19 +51,13 @@ function validateEmail() {
 }
 
 function validatePhone() {
-  console.log("validatePhone()");
   phoneInput = document.getElementById("phoneInput");
   custPhone = phoneInput.value;
-  console.log(custPhone);
   if (!/^[\d()-]{1,50}$/.test(custPhone)) {
-    console.log("invalid");
     phoneInput.className = "form-control is-invalid";
-    //updateOrderButton();
     return false;
   } else {
-    console.log("valid");
     phoneInput.className = "form-control is-valid";
-    //updateOrderButton();
     return true;
   }
 }
@@ -77,11 +67,9 @@ function validateStreet() {
   custStreet = streetInput.value;
   if (custStreet.length < 2 || custStreet.length > 50) {
     streetInput.className = "form-control is-invalid";
-    //updateOrderButton();
     return false;
   } else {
     streetInput.className = "form-control is-valid";
-    //updateOrderButton();
     return true;
   }
 }
@@ -91,11 +79,9 @@ function validateZip() {
   custZip = zipInput.value;
   if (!/^[\d]{5}$/.test(custZip)) {
     zipInput.className = "form-control is-invalid";
-    //updateOrderButton();
     return false;
   } else {
     zipInput.className = "form-control is-valid";
-    //updateOrderButton();
     return true;
   }
 }
@@ -105,17 +91,15 @@ function validateCity() {
   custCity = cityInput.value;
   if (custCity.length < 2 || custCity.length > 50) {
     cityInput.className = "form-control is-invalid";
-    //updateOrderButton();
     return false;
   } else {
     cityInput.className = "form-control is-valid";
-    //updateOrderButton();
     return true;
   }
 }
 
-/*
-function valAllFieldsUpdateOrdBtn() {
+
+function valAllFieldsAndUpdateOrdBtn() {
   validateName();
   validateEmail();
   validatePhone();
@@ -124,7 +108,7 @@ function valAllFieldsUpdateOrdBtn() {
   validateCity();
   updateOrderButton();
 }
-*/
+
 
 function areAllFieldsValid() {
   if (
@@ -150,58 +134,6 @@ function updateOrderButton() {
   }
 }
 
-// Validera värdena i formuläret
-function validateForm() {
-  // Hämta värden från formuläret
-  custName = document.getElementById("nameInput").value;
-  custEmail = document.getElementById("emailInput").value;
-  custPhone = document.getElementById("phoneInput").value;
-  custStreet = document.getElementById("streetInput").value;
-  custZip = document.getElementById("zipInput").value;
-  custCity = document.getElementById("cityInput").value;
-
-  /*
-  // Validera namn
-  if (custName.length < 2 || custName.length > 50) {
-    alert("Namnet måste vara mellan 2 och 50 tecken långt");
-    return false;
-  }
-
-  // Validera e-postadress
-  if (!custEmail.includes("@") || custEmail.length > 50) {
-    alert("Fyll i en giltig epost-adress (max 50 tecken)");
-    return false;
-  }
-
-  if (!/^[\d()-]{0,50}$/.test(custPhone)) {
-    alert("Fyll i ett giltigt telefonnummmer (max 50 siffror)");
-    return false;
-  }
-
-  // Validera gatuadress
-  if (custStreet.length < 2 || custStreet.length > 50) {
-    alert("Gatuadressen måste vara mellan 2 och 50 tecken lång");
-    return false;
-  }
-
-  // Validera postkod
-  if (!/^[\d]{5}$/.test(custZip)) {
-    alert("Fyll i en giltig postkod (5 siffror totalt)");
-    return false;
-  }
-
-  // Validera postort
-  if (custCity.length < 2 || custCity.length > 50) {
-    alert("Postorten måste vara mellan 2 och 50 tecken lång");
-    return false;
-  }
-  */
-
-  // Om allt är giltigt, skicka formuläret
-  //placeOrderLog();
-  placeOrder();
-  return true;
-}
 
 function placeOrderLog() {
   console.log("order placed: ");
