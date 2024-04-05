@@ -59,9 +59,7 @@ function populateCart() {
           <button class="btn btn-danger" onclick="emptyCart()">🗑️ Töm varukorg</button>
       </div>
       <div class="text-center">
-          <a href="order.html">
-            <button class="btn btn-primary" onclick="placeOrder()">💳 Gå vidare till beställning</button>
-          </a>
+        <button class="btn btn-primary" onclick="window.location.href='order.html';placeOrder()">💳 Gå vidare till beställning</button>
       </div>`;
   } else {
     markup = "<div class='text-center'><p>Din varukorg är tom</p></div>";
