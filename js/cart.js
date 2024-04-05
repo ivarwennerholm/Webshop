@@ -1,13 +1,4 @@
 populateCart();
-//setInputWidth();
-// TEST
-const i = getElementWidth("btn-1");
-console.log(i);
-//const s = `style="width: ${getElementWidth("btn-1")}px"`;
-//const i = getElementWidth('btn-' + ${product.id});
-//console.log(s);
-
-////
 
 function populateCart() {
   var cart = JSON.parse(localStorage.getItem("cart"));

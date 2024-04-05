@@ -7,10 +7,11 @@ let custZip;
 let custCity;
 
 // Hitta och addera lyssnare till order-knappen
-//const orderBtn = document.getElementById("orderBtn");
-//orderBtn.addEventListener("click", validateForm);
+//const orderButton = document.getElementById("orderButton");
+//orderButton.addEventListener("click", validateForm);
 populateCart();
-validateAllTest();
+//valAllFieldsUpdateOrdBtn();
+updateOrderButton();
 
 function populateCart() {
   var cart = JSON.parse(localStorage.getItem("cart"));
@@ -58,13 +59,15 @@ function validatePhone() {
   phoneInput = document.getElementById("phoneInput");
   custPhone = phoneInput.value;
   console.log(custPhone);
-  if (!/^[\d()-]{0,50}$/.test(custPhone)) {
+  if (!/^[\d()-]{1,50}$/.test(custPhone)) {
     console.log("invalid");
     phoneInput.className = "form-control is-invalid";
+    //updateOrderButton();
     return false;
   } else {
     console.log("valid");
     phoneInput.className = "form-control is-valid";
+    //updateOrderButton();
     return true;
   }
 }
@@ -74,9 +77,11 @@ function validateStreet() {
   custStreet = streetInput.value;
   if (custStreet.length < 2 || custStreet.length > 50) {
     streetInput.className = "form-control is-invalid";
+    //updateOrderButton();
     return false;
   } else {
     streetInput.className = "form-control is-valid";
+    //updateOrderButton();
     return true;
   }
 }
@@ -86,42 +91,62 @@ function validateZip() {
   custZip = zipInput.value;
   if (!/^[\d]{5}$/.test(custZip)) {
     zipInput.className = "form-control is-invalid";
+    //updateOrderButton();
     return false;
   } else {
     zipInput.className = "form-control is-valid";
+    //updateOrderButton();
     return true;
   }
 }
-
 
 function validateCity() {
   cityInput = document.getElementById("cityInput");
   custCity = cityInput.value;
   if (custCity.length < 2 || custCity.length > 50) {
     cityInput.className = "form-control is-invalid";
+    //updateOrderButton();
     return false;
   } else {
     cityInput.className = "form-control is-valid";
+    //updateOrderButton();
     return true;
   }
 }
 
-function validateAllTest() {
+/*
+function valAllFieldsUpdateOrdBtn() {
   validateName();
   validateEmail();
   validatePhone();
   validateStreet();
   validateZip();
   validateCity();
+  updateOrderButton();
 }
+*/
 
-function validateAll() {
-  //orderButton = document.getElementById("orderButton");
-  if (validateName() && validateEmail() && validatePhone() && validateStreet() && validateZip() && validateCity()) {
-    //orderButton.removeAttribute("disabled");
+function areAllFieldsValid() {
+  if (
+    validateName() &&
+    validateEmail() &&
+    validatePhone() &&
+    validateStreet() &&
+    validateZip() &&
+    validateCity()
+  ) {
     return true;
   } else {
     return false;
+  }
+}
+
+function updateOrderButton() {
+  orderButton = document.getElementById("orderButton");
+  if (areAllFieldsValid()) {
+    orderButton.disabled = false;
+  } else {
+    orderButton.disabled = true;
   }
 }
 
