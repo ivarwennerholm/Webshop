@@ -1,6 +1,6 @@
 var xRate;
 getXrate();
-getProducts();
+populateProducts();
 
 
 function getXrate() {
@@ -13,7 +13,7 @@ function getXrate() {
     });
 }
 
-function getProducts() {
+function populateProducts() {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {

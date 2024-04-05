@@ -1,11 +1,3 @@
-// Värden att använda globalt
-let custName;
-let custEmail;
-let custPhone;
-let custStreet;
-let custZip;
-let custCity;
-
 populateCart();
 valAllFieldsAndUpdateOrdBtn();
 
@@ -98,7 +90,6 @@ function validateCity() {
   }
 }
 
-
 function valAllFieldsAndUpdateOrdBtn() {
   validateName();
   validateEmail();
@@ -108,7 +99,6 @@ function valAllFieldsAndUpdateOrdBtn() {
   validateCity();
   updateOrderButton();
 }
-
 
 function areAllFieldsValid() {
   if (
@@ -133,6 +123,33 @@ function updateOrderButton() {
     orderButton.disabled = true;
   }
 }
+
+function setCustomer() {
+  if ("customer" in localStorage) {
+    localStorage.removeItem("customer");
+  }
+  custName = document.getElementById("nameInput").value;
+  custEmail = document.getElementById("emailInput").value;
+  custPhone = document.getElementById("phoneInput").value;
+  custStreet = document.getElementById("streetInput").value;
+  custZip = document.getElementById("zipInput").value;
+  custCity = document.getElementById("cityInput").value;
+  var customer = {
+    name: custName,
+    email: custEmail,
+    phone: custPhone,
+    street: custStreet,
+    zip: custZip,
+    city: custCity,
+  };
+  localStorage.setItem("customer", JSON.stringify(customer));
+}
+
+
+
+
+
+
 
 
 function placeOrderLog() {
